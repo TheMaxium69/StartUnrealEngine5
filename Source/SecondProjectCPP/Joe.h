@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Joe.generated.h"
 
 UCLASS()
@@ -25,5 +27,24 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+
+	// Function
+
+	void FunctionMoveFrontX(float Value);
+
+	// Composants
+
+		// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera")
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
+		USpringArmComponent* mySpringArm;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
+		UCameraComponent* myCamera;
+
+
+
 
 };
