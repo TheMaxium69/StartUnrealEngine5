@@ -29,4 +29,7 @@ protected:
 	bool testBoolean = true;
 	FString testString = "Je suis un msg";
 
+	void myFunction();
+	void myFunction2(int N);
+
 };
