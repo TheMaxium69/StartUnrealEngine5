@@ -15,7 +15,7 @@ void Abases::BeginPlay()
 {
 	Super::BeginPlay();
 
-	testNombre = 5;
+	testNombre = 3;
 	testDecimal = 5.16f;
 
 	UE_LOG(LogTemp,Warning,TEXT("Salut je suis un actor"));
@@ -26,6 +26,27 @@ void Abases::BeginPlay()
 
 	myFunction();
 	myFunction2(testNombre);
+	int resultat = myFunction3(5, 9);
+	UE_LOG(LogTemp,Warning,TEXT("Ma function additions int = %d"), resultat);
+	int resultat2 = myFunction4(5);
+	UE_LOG(LogTemp,Warning,TEXT("Ma function (default) additions int = %d"), resultat2);
+
+	// testNombre = testNombre + 2;
+	testNombre += 2;
+
+	if (testNombre < 3)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Ma variable est infériere a 3"));
+	}
+	else if (testNombre == 3)
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Ma variable est égal a 3"));
+	}
+	else
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Ma variable est supérieur a 3"));
+	}
+
 }
 
 // Called every frame
@@ -37,13 +58,25 @@ void Abases::Tick(float DeltaTime)
 // My Function
 void Abases::myFunction()
 {
-	UE_LOG(LogTemp,Warning,TEXT("Je suis dans ma function"));
+	UE_LOG(LogTemp,Error,TEXT("Je suis dans ma function"));
 }
 
 void Abases::myFunction2(int N)
 {
 	N = N + 2;
 
-	UE_LOG(LogTemp,Warning,TEXT("Une additions = %d"), N);
+	UE_LOG(LogTemp,Error,TEXT("Une additions = %d"), N);
+}
+
+int Abases::myFunction3(int N1, int N2)
+{
+	int N3 = N1 + N2;
+	return N3;
+}
+
+int Abases::myFunction4(int N1, int N2)
+{
+	int N3 = N1 + N2;
+	return N3;
 }
 

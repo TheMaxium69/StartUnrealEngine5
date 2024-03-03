@@ -31,5 +31,7 @@ protected:
 
 	void myFunction();
 	void myFunction2(int N);
+	int myFunction3(int N1, int N2);
+	int myFunction4(int N1, int N2=11);
 
 };
