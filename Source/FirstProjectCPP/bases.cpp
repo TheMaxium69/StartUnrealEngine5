@@ -21,7 +21,7 @@ void Abases::BeginPlay()
 
 	UE_LOG(LogTemp,Warning,TEXT("Salut je suis un actor"));
 	UE_LOG(LogTemp,Warning,TEXT("Ma variable int = %d"), testNombre);
-	UE_LOG(LogTemp,Warning,TEXT("Ma variable float = %d"), testDecimal);
+	UE_LOG(LogTemp,Warning,TEXT("Ma variable float = %f"), testDecimal);
 
 }
 
