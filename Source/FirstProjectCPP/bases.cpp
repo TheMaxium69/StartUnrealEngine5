@@ -22,7 +22,8 @@ void Abases::BeginPlay()
 	UE_LOG(LogTemp,Warning,TEXT("Salut je suis un actor"));
 	UE_LOG(LogTemp,Warning,TEXT("Ma variable int = %d"), testNombre);
 	UE_LOG(LogTemp,Warning,TEXT("Ma variable float = %f"), testDecimal);
-
+	UE_LOG(LogTemp,Warning,TEXT("Ma variable Boolean = %d"), testBoolean);
+	UE_LOG(LogTemp,Warning,TEXT("Ma variable Texte = %s"), *testString);
 }
 
 // Called every frame

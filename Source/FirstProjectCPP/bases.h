@@ -26,6 +26,7 @@ public:
 protected:
 	int testNombre;
 	float testDecimal;
+	bool testBoolean = true;
 	FString testString = "Je suis un msg";
 
 };
