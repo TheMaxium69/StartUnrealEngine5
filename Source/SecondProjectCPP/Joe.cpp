@@ -28,7 +28,7 @@ AJoe::AJoe()
 
 	// Force du Jump
 	// Pour ce personnage : Velocity de 300.f = Hauteur de 46.f environ
-	GetCharacterMovement()->JumpZVelocity = 300.f;
+	GetCharacterMovement()->JumpZVelocity = 600.f;
 
 	// Controle dans l'air
 	GetCharacterMovement()->AirControl = 0.2f;
@@ -83,6 +83,9 @@ AJoe::AJoe()
 	// Tourner le bras avec le controller
 	mySpringArm->bUsePawnControlRotation = true;
 
+	// NE PAS PASSER A TRAVERS (default true)
+	// mySpringArm->bDoCollisionTest = false;
+
 	/*****************************************
 	 * Ajouter un componet : la camera   	 *
 	 *****************************************/
@@ -97,6 +100,16 @@ AJoe::AJoe()
 	 *****************************************/
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	/*****************************************
+	 * Set les animations	            	 *
+	 *****************************************/
+
+	GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint); // ETA PARDEFAULT
+
+
+	ConstructorHelpers::FObjectFinder<UBlueprint>AnimObj(TEXT("AnimBlueprint'/Game/Acteurs/Joe/Animations/BPAN_Joe.BPAN_Joe'"));
+	GetMesh()->AnimClass = AnimObj.Object->GeneratedClass;
 
 
 }
@@ -114,6 +127,12 @@ void AJoe::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	TheDeltaTime = DeltaTime;
 
+
+	// Recupere la vitesse deplac du perso
+	FVector V = GetVelocity();
+	float F = V.Size();
+
+	VSpeed = F;
 }
 
 // Called to bind functionality to input
@@ -139,6 +158,9 @@ void AJoe::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("ToRun", IE_Pressed,this, &AJoe::FunctionToRun);
 	PlayerInputComponent->BindAction("ToRun", IE_Released,this, &AJoe::FunctionNotToRun);
+
+	PlayerInputComponent->BindAction("ToJump", IE_Pressed,this, &AJoe::FunctionToJump);
+	// PlayerInputComponent->BindAction("ToJump", IE_Released,this, &AJoe::FunctionNotToJump);
 
 }
 
@@ -185,5 +207,15 @@ void AJoe::FunctionToRun()
 void AJoe::FunctionNotToRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+}
+
+void AJoe::FunctionToJump()
+{
+	Jump();
+}
+
+void AJoe::FunctionNotToJump()
+{
+	StopJumping();
 }
 

@@ -49,6 +49,8 @@ protected:
 	void FunctionLookUpDown(float Value);
 	void FunctionToRun();
 	void FunctionNotToRun();
+	void FunctionToJump();
+	void FunctionNotToJump();
 
 	// Composants
 
@@ -60,7 +62,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MyCamera")
 		UCameraComponent* myCamera;
 
-
+public:
+	float VSpeed;
 
 
 };
