@@ -33,6 +33,20 @@ AJoe::AJoe()
 	// Controle dans l'air
 	GetCharacterMovement()->AirControl = 0.2f;
 
+	// Le personnage tourne en direction de l'INPUT
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	// Changer la vitesse max de marche
+	GetCharacterMovement()->MaxWalkSpeed = 500.f; // de base 600
+
+	/*********************************************************************
+	 * On ne veut pas le code/controller gere la rotation mais la cam	 *
+	 *********************************************************************/
+
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
+
 	/*****************************
 	 * ACCEDER A SkeletalMesh	 *
 	 *****************************/
@@ -66,6 +80,9 @@ AJoe::AJoe()
 	// Atacher au parent root
 	mySpringArm->SetupAttachment(RootComponent);
 
+	// Tourner le bras avec le controller
+	mySpringArm->bUsePawnControlRotation = true;
+
 	/*****************************************
 	 * Ajouter un componet : la camera   	 *
 	 *****************************************/
@@ -95,6 +112,7 @@ void AJoe::BeginPlay()
 void AJoe::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	TheDeltaTime = DeltaTime;
 
 }
 
@@ -107,17 +125,65 @@ void AJoe::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	 * AXIS Mapping	 *
 	 *****************/
 
-	PlayerInputComponent->BindAxis("MoveFrontX", this, &AJoe::FunctionMoveFrontX);
+	//Perso
+	PlayerInputComponent->BindAxis("MoveX", this, &AJoe::FunctionMoveFrontX);
+	PlayerInputComponent->BindAxis("MoveY", this, &AJoe::FunctionMoveY);
+
+	//Cam
+	PlayerInputComponent->BindAxis("Rotate", this, &AJoe::FunctionRotate);
+	PlayerInputComponent->BindAxis("LookUpDown", this, &AJoe::FunctionLookUpDown);
 
 	/*******************
 	 * Action Mapping  *
 	 *******************/
 
+	PlayerInputComponent->BindAction("ToRun", IE_Pressed,this, &AJoe::FunctionToRun);
+	PlayerInputComponent->BindAction("ToRun", IE_Released,this, &AJoe::FunctionNotToRun);
+
 }
 
 void AJoe::FunctionMoveFrontX(float Value)
 {
+	if (Controller && Value != 0.0f)
+	{
+		FRotator rotation = Controller->GetControlRotation();
+		FRotator YawRotation(0, rotation.Yaw, 0);
+		FVector direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(direction, Value);
 
+	}
+}
 
+void AJoe::FunctionMoveY(float Value)
+{
+	if (Controller && Value != 0.0f)
+	{
+		FRotator rotation = Controller->GetControlRotation();
+		FRotator YawRotation(0, rotation.Yaw, 0);
+		FVector direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(direction, Value);
+
+	}
+}
+
+void AJoe::FunctionRotate(float Value)
+{
+	// AddControllerYawInput(Value * VitesseHorz * GetWorld()->GetDeltaSeconds());
+	AddControllerYawInput(Value * VitesseHorz * TheDeltaTime);
+}
+
+void AJoe::FunctionLookUpDown(float Value)
+{
+	AddControllerPitchInput(Value * VitesseVert * TheDeltaTime);
+}
+
+void AJoe::FunctionToRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 900.f;
+}
+
+void AJoe::FunctionNotToRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 }
 

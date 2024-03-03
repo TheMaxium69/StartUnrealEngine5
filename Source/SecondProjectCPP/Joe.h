@@ -30,18 +30,34 @@ public:
 
 protected:
 
+	// Variable
+
+	float TheDeltaTime;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="InputCamera")
+	float VitesseHorz = 60.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="InputCamera")
+	float VitesseVert = 60.f;
+
+
 	// Function
 
 	void FunctionMoveFrontX(float Value);
+	void FunctionMoveY(float Value);
+	void FunctionRotate(float Value);
+	void FunctionLookUpDown(float Value);
+	void FunctionToRun();
+	void FunctionNotToRun();
 
 	// Composants
 
 		// UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera")
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MyCamera")
 		USpringArmComponent* mySpringArm;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MyCamera")
 		UCameraComponent* myCamera;
 
 
