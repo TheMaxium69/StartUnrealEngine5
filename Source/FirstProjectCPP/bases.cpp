@@ -16,8 +16,13 @@ void Abases::BeginPlay()
 {
 	Super::BeginPlay();
 
+	testNombre = 5;
+	testDecimal = 5.16f;
+
 	UE_LOG(LogTemp,Warning,TEXT("Salut je suis un actor"));
-	
+	UE_LOG(LogTemp,Warning,TEXT("Ma variable int = %d"), testNombre);
+	UE_LOG(LogTemp,Warning,TEXT("Ma variable float = %d"), testDecimal);
+
 }
 
 // Called every frame

@@ -23,4 +23,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected:
+	int testNombre;
+	float testDecimal;
+	FString testString = "Je suis un msg";
+
 };
