@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Bases.generated.h"
+#include "bases.generated.h"
 
 UCLASS()
-class FIRSTPROJECTCPP_API ABases : public AActor
+class FIRSTPROJECTCPP_API Abases : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ABases();
+	Abases();
 
 protected:
 	// Called when the game starts or when spawned
